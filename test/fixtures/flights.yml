@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  id: 1
+  departure_airport_id: 1
+  arrival_airport_id: 6
+  start: DateTime.current + 1.day
+  duration: "2:15:00"
+two:
+  id: 2
+  departure_airport_id: 6
+  arrival_airport_id: 1
+  start: DateTime.current + 2.day
+  duration: "2:15:00"
+three:
+  id: 3
+  departure_airport_id: 3
+  arrival_airport_id: 1
+  start: DateTime.current + 1.day
+  duration: "2:15:00"

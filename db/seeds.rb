@@ -34,13 +34,37 @@ guwahati = Airport.find_or_create_by!(code: "GAU", city: "Guwahati")
   Flight.find_or_create_by(
     departure_airport_id: dep.id,
     arrival_airport_id: ari.id,
-    start: (DateTime.current + 2.day).change(hour: rand(4..22), min: rand(60)),
-    duration: "#{rand(1..3)}:#{rand(15..60)}:00"
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
+  )
+  Flight.find_or_create_by(
+    departure_airport_id: dep.id,
+    arrival_airport_id: ari.id,
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
+  )
+  Flight.find_or_create_by(
+    departure_airport_id: dep.id,
+    arrival_airport_id: ari.id,
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
   )
   Flight.find_or_create_by(
     departure_airport_id: ari.id,
     arrival_airport_id: dep.id,
-    start: (DateTime.current + 2.day).change(hour: rand(4..22), min: rand(60)),
-    duration: "#{rand(1..3)}:#{rand(15..60)}:00"
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
+  )
+  Flight.find_or_create_by(
+    departure_airport_id: ari.id,
+    arrival_airport_id: dep.id,
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
+  )
+  Flight.find_or_create_by(
+    departure_airport_id: ari.id,
+    arrival_airport_id: dep.id,
+    start: (DateTime.current + rand(1..7).day).change(hour: rand(4..22), min: rand(59)),
+    duration: rand(1..3).hours + rand(59).minutes
   )
 end

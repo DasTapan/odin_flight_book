@@ -10,4 +10,7 @@ class FlightsController < ApplicationController
             @flights = Flight.searched(dep_id: departure_airport_id, ari_id: arrival_airport_id, start: start)
         end
     end
+
+    def new
+    end
 end

@@ -8,6 +8,7 @@ class FlightsController < ApplicationController
             arrival_airport_id = Airport.find_by(code:params[:arrival_airport]).id
             # binding.irb
             @flights = Flight.searched(dep_id: departure_airport_id, ari_id: arrival_airport_id, start: start)
+            @result = {flights: @flights, total_tickets: params[:passengers]}
         end
     end
 

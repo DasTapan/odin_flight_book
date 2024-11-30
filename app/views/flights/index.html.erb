@@ -53,8 +53,8 @@
   <% unless @flights.blank? %>
     <h2>Available Flights</h2>
     <form accept-charset="UTF-8" action="/bookings/new" method="get">
-      <input type="hidden" name="booking[tickets]" value="2"/>
-      <% @flights.each do |flight| %>
+      <input type="hidden" name="booking[tickets]" value="<%=@result[:total_tickets]%>"/>
+      <% @result[:flights].each do |flight| %>
         <div>
           <input type="radio" id="<%=flight.id%>" name="booking[flight_id]" value="<%=flight.id%>"/>
           <label for="<%=flight.id%>">

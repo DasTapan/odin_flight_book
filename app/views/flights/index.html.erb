@@ -1,105 +1,74 @@
-<h2 class="text-3xl font-bold text-center py-6">Book Your Flight</h2>
+<h2>Book Your Flight</h2>
 
-<div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
-  <form accept-charset="UTF-8" action="" method="get" class="space-y-4">
-    <!-- Departure Airport -->
-    <div>
-      <label for="departure_airport" class="block text-lg font-medium text-gray-700">Departure Airport:</label>
-      <select
-        id="departure_airport"
-        name="departure_airport"
-        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <%= @airports.map do |airport| %>
-          <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
-        <% end %>
-      </select>
-    </div>
+<form accept-charset="UTF-8" action="/flights" method="get">
+  <!-- Departure Airport -->
+  <label for="departure_airport">Departure Airport:</label>
+  <select id="departure_airport" name="departure_airport">
+    <%= @airports.map do |airport| %>
+      <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
+    <% end %>
+  </select>
 
-    <!-- Arrival Airport -->
-    <div>
-      <label for="arrival_airport" class="block text-lg font-medium text-gray-700">Arrival Airport:</label>
-      <select
-        id="arrival_airport"
-        name="arrival_airport"
-        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <%= @airports.map do |airport| %>
-          <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
-        <% end %>
-      </select>
-    </div>
+  <!-- Arrival Airport -->
+  <label for="arrival_airport">Arrival Airport:</label>
+  <select id="arrival_airport" name="arrival_airport">
+    <%= @airports.map do |airport| %>
+      <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
+    <% end %>
+  </select>
 
-    <!-- Number of Passengers -->
-    <div>
-      <label for="passengers" class="block text-lg font-medium text-gray-700">Number of Passengers:</label>
-      <select
-        id="passengers"
-        name="passengers"
-        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </div>
+  <!-- Number of Passengers -->
+  <label for="passengers">Number of Passengers:</label>
+  <select id="passengers" name="passengers">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
 
-    <!-- Date -->
-    <div>
-      <label for="start" class="block text-lg font-medium text-gray-700">Date:</label>
-      <select
-        id="start"
-        name="start"
-        class="block w-full mt-1 border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <%= @flight_dates.map do |fd| %>
-          <option value=<%= fd %>><%= fd %></option>
-        <% end %>
-      </select>
-    </div>
+  <!-- Date -->
+  <label for="start">Date:</label>
+  <select id="start" name="start">
+    <%= @flight_dates.map do |fd| %>
+      <option value=<%= fd %>><%= fd %></option>
+    <% end %>
+  </select>
 
-    <!-- Submit Button -->
-    <div class="text-center">
-      <input
-        type="submit"
-        value="Search"
-        name="commit"
-        data-turbo-submits-with="Searching..."
-        class="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring focus:ring-indigo-400 focus:outline-none"
-      />
-    </div>
-  </form>
-
-  <!-- Back to Home Link -->
-  <div class="mt-4 text-center">
-    <%= link_to 'Back to Home', root_path, class: 'text-indigo-600 hover:underline' %>
+  <!-- Submit Button -->
+  <div>
+    <input
+      type="submit"
+      value="Search"
+      name="commit"
+      data-turbo-submits-with="Searching..."
+    />
   </div>
-</div>
+  <!-- Back to Home Link -->
+  <%= link_to 'Back to Home', root_path %>
+</form>
+
 
 <% if params[:commit] %>
   <% unless @flights.blank? %>
-    <div class="py-10">
-      <h2 class="text-2xl font-bold text-center">Available Flights</h2>
-      <ul class="mt-6 space-y-4">
-        <% @flights.each do |flight| %>
-          <li class="p-4 bg-gray-50 rounded-lg shadow-md">
-            <div class="flex justify-between items-center">
-              <div>
-                <span class="block font-medium text-gray-700">From: <%= flight.departure_airport_id %></span>
-                <span class="block font-medium text-gray-700">To: <%= flight.arrival_airport_id %></span>
-              </div>
-              <div class="text-right">
-                <span class="block font-medium text-gray-700"><%= flight.start.strftime("%d-%b-%Y") %></span>
-                <span class="block text-gray-500"><%="#{flight.duration.parts[:hours]}:#{flight.duration.parts[:minutes]}" %></span>
-              </div>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+    <h2>Available Flights</h2>
+    <form accept-charset="UTF-8" action="/bookings/new" method="get">
+      <input type="hidden" name="booking[tickets]" value="2"/>
+      <% @flights.each do |flight| %>
+        <div>
+          <input type="radio" id="<%=flight.id%>" name="booking[flight_id]" value="<%=flight.id%>"/>
+          <label for="<%=flight.id%>">
+            <span>From: <%= Airport.find(flight.departure_airport_id).city %></span>
+            <span>To: <%= Airport.find(flight.arrival_airport_id).city %></span>
+            <span><%=flight.start.strftime("%I:%M %p")%></span>
+            <span><%= flight.start.strftime("%d-%b-%Y") %></span>
+            <span><%="#{flight.duration.parts[:hours]}:#{flight.duration.parts[:minutes]}" %></span>
+          </label>
+        </div>
+      <% end %>      
+      <input type="submit" value="Next" name="booking_status"/>
+    </form>
   <% else %>
-    <div class="mt-10 text-center text-red-600">No flights found</div>
+    <h2>No flights found</h2>
   <% end %>
 <% end %>

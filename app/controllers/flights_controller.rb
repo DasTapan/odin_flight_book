@@ -1,7 +1,7 @@
 class FlightsController < ApplicationController
     def index
-        @airports = Airport.all
-        @flight_dates = Flight.order('start').pluck(:start).map {|date| date.strftime("%d-%b-%Y")}.uniq
+        @airports = Airport.all.map {|a| [a.city,a.code]}
+        @flight_dates = Flight.order('start').pluck(:start).map {|date| date.strftime("%d-%b-%Y")}.uniq {|d| [d,d]}
         if params[:commit]
             start = params[:start]
             departure_airport_id = Airport.find_by(code:params[:departure_airport]).id

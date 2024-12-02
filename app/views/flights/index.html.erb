@@ -3,37 +3,23 @@
 <form accept-charset="UTF-8" action="/flights" method="get">
   <!-- Departure Airport -->
   <label for="departure_airport">Departure Airport:</label>
-  <select id="departure_airport" name="departure_airport">
-    <%= @airports.map do |airport| %>
-      <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
-    <% end %>
-  </select>
+  <%=select_tag(:departure_airport,options_for_select(@airports))%>
 
   <!-- Arrival Airport -->
   <label for="arrival_airport">Arrival Airport:</label>
-  <select id="arrival_airport" name="arrival_airport">
-    <%= @airports.map do |airport| %>
-      <option value=<%= airport.code %>><%="#{airport.city} (#{airport.code})" %></option>
-    <% end %>
-  </select>
+  <%=select_tag(:arrival_airport,options_for_select(@airports))%>
 
   <!-- Number of Passengers -->
   <label for="passengers">Number of Passengers:</label>
   <select id="passengers" name="passengers">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
+    <%(1..5).map do|i|%>
+      <option value="<%=i%>"><%=i%></option>
+    <%end%>
   </select>
 
   <!-- Date -->
   <label for="start">Date:</label>
-  <select id="start" name="start">
-    <%= @flight_dates.map do |fd| %>
-      <option value=<%= fd %>><%= fd %></option>
-    <% end %>
-  </select>
+  <%=select_tag(:start,options_for_select(@flight_dates))%>
 
   <!-- Submit Button -->
   <div>

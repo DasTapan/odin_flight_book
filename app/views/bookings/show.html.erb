@@ -1,19 +1,31 @@
-<h1>this is the booking show page</h1>
+<h2 class="text-2xl font-bold text-center my-8">Booking Details</h2>
 
-<span><%= @departure_city %> To <%= @arrival_city %></span></br>
-<span><%= @flight_on %></span></br>
-<span><%= @duration.parts[:hours]%>:<%=@duration.parts[:minutes]%></span>
+<!-- Flight Details -->
+<div class="max-w-2xl mx-auto mb-6 p-4 bg-gray-100 border rounded-md shadow-sm">
+  <p class="text-lg font-semibold text-gray-800 mb-4">Flight Information:</p>
+  <ul class="text-gray-700 space-y-2">
+    <li><strong>From:</strong> <%= @departure_city %></li>
+    <li><strong>To:</strong> <%= @arrival_city %></li>
+    <li><strong>Date:</strong> <%= @flight_on %></li>
+    <li><strong>Duration:</strong> <%= @duration.parts[:hours] %>:<%= @duration.parts[:minutes] %> hours</li>
+  </ul>
+</div>
 
-<h2>Passengers</h2>
+<!-- Passengers List -->
+<div class="max-w-2xl mx-auto mb-6 p-4 bg-white border rounded-md shadow-sm">
+  <p class="text-lg font-semibold text-gray-800 mb-4">Passengers:</p>
+  <div class="space-y-4">
+    <% @passengers.each do |passenger| %>
+      <div class="p-4 border rounded-md shadow-sm hover:shadow-md transition">
+        <p class="text-gray-800"><strong>Name:</strong> <%= passenger.name %></p>
+        <p class="text-gray-600"><strong>Mobile:</strong> <%= passenger.mobile %></p>
+        <p class="text-gray-600"><strong>Email:</strong> <%= passenger.email %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<ul>
-    <%@passengers.map do |passenger|%>
-        <li>
-            <span><%= passenger.name %></span>
-            <span><%= passenger.mobile %></span>
-            <span><%= passenger.email %></span>
-        </li>
-    <%end%>
-</ul>
-
-<div><%=link_to "Home", root_path %></div>
+<!-- Back to Home -->
+<div class="flex justify-center">
+  <%= link_to "Home", root_path, class: "bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition duration-300 ease-in-out" %>
+</div>

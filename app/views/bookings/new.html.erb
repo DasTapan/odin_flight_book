@@ -1,1 +1,22 @@
 <h1>fill passengers details and book ticket</h1>
+
+<%=form_with model: @booking do |f| %>
+    <h4>Passengers:</h4>
+    <input type="hidden" name="booking[flight_id]" value="<%=@flight.id%>"/>
+    <ul>
+        <%= f.fields_for :passengers do |sub_form| %>
+            <li>
+                <%=sub_form.check_box :_destroy%>
+                <%= sub_form.label :name %>
+                <%= sub_form.text_field :name %>
+
+                <%= sub_form.label :mobile %>
+                <%= sub_form.text_field :mobile %>
+
+                <%= sub_form.label :email %>
+                <%= sub_form.text_field :email %>
+            </li>
+        <% end %>
+  </ul>
+  <%= f.submit "Book Ticket"%>
+<%end%>

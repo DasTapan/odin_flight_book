@@ -1,0 +1,19 @@
+<h1>this is the booking show page</h1>
+
+<span><%= @departure_city %> To <%= @arrival_city %></span></br>
+<span><%= @flight_on %></span></br>
+<span><%= @duration.parts[:hours]%>:<%=@duration.parts[:minutes]%></span>
+
+<h2>Passengers</h2>
+
+<ul>
+    <%@passengers.map do |passenger|%>
+        <li>
+            <span><%= passenger.name %></span>
+            <span><%= passenger.mobile %></span>
+            <span><%= passenger.email %></span>
+        </li>
+    <%end%>
+</ul>
+
+<div><%=link_to "Home", root_path %></div>

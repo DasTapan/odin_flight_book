@@ -11,7 +11,7 @@ class BookingsController < ApplicationController
         @flight = @booking.flight
         @departure_city = @flight.departure_airport[:city]
         @arrival_city = @flight.arrival_airport[:city]
-        @flight_on = @flight.start.strftime("%d-%b-%Y")
+        @flight_on = @flight.start
         @passengers = @booking.passengers
         @duration = @flight[:duration]
     end

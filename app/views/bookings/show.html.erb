@@ -6,7 +6,8 @@
   <ul class="text-gray-700 space-y-2">
     <li><strong>From:</strong> <%= @departure_city %></li>
     <li><strong>To:</strong> <%= @arrival_city %></li>
-    <li><strong>Date:</strong> <%= @flight_on %></li>
+    <li><strong>Date:</strong> <%= @flight_on.strftime("%d-%b-%Y") %></li>
+    <li><strong>At:</strong> <%= @flight_on.strftime("%I:%M %p") %></li>
     <li><strong>Duration:</strong> <%= @duration.parts[:hours] %>:<%= @duration.parts[:minutes] %> hours</li>
   </ul>
 </div>

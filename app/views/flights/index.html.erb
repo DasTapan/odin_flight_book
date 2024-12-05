@@ -36,37 +36,33 @@
 
 <%end%>
 
-
 <% if params[:commit] %>
   <% unless @flights.blank? %>
     <h2 class="text-xl font-semibold text-center my-6">Available Flights</h2>
-    <form accept-charset="UTF-8" action="/bookings/new" method="get" class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md">
-      <input type="hidden" name="booking[tickets]" value="<%= @result[:total_tickets] %>"/>
-      <% @result[:flights].each do |flight| %>
+
+    <%= form_with url: "/bookings/new", class: "max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md", method: :get do |f| %>
+      <%= hidden_field_tag "booking[tickets]",  @result[:total_tickets] %>
+      <%@result[:flights].each do |flight|%>
         <div class="mb-4 p-4 border rounded-md hover:shadow-lg transition">
-          <input type="radio" id="<%= flight.id %>" name="booking[flight_id]" value="<%= flight.id %>" class="mr-2">
-          <label for="<%= flight.id %>" class="text-sm font-medium text-gray-800">
+          <%= radio_button_tag "booking[flight_id]", flight.id, class:"mr-2"%>
+          <%= label_tag "booking_flight_id_#{flight.id}", flight.id, class: "text-sm font-medium text-gray-800" do %>
             From: <%= Airport.find(flight.departure_airport_id).city %>
             To: <%= Airport.find(flight.arrival_airport_id).city %><br>
             <span class="block text-gray-600">
               <%= flight.start.strftime("%I:%M %p") %>, <%= flight.start.strftime("%d-%b-%Y") %><br>
               Duration: <%= "#{flight.duration.parts[:hours]}:#{flight.duration.parts[:minutes]}" %>
             </span>
-          </label>
+          <%end%>
         </div>
-      <% end %>
+      <%end%>
       <div class="flex justify-between items-center">
-        <input
-          type="submit"
-          value="Next"
-          name="booking_status"
-          data-turbo-submits-with="Searching..."
-          class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition duration-300 ease-in-out"
-        />
+        <%= f.submit "Next", name: "booking_status", class: "bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition duration-300 ease-in-out"%>
         <%= link_to 'Back to Home', root_path, class: "text-indigo-600 hover:text-indigo-700 text-sm" %>
       </div>
-    </form>
+    <%end%>
+
   <% else %>
     <p class="text-center text-gray-500 mt-6">No flights found</p>
   <% end %>
 <% end %>
+

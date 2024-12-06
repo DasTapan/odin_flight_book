@@ -4,13 +4,17 @@
   <!-- Departure Airport -->
   <div class="mb-4">
     <%= form.label :departure_airport, "Departure", class: "block text-sm font-medium text-gray-700"%>
-    <%= select_tag(:departure_airport, options_for_select(@airports), class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
+    <%= select_tag(:departure_airport,
+      options_for_select(@airports,params[:departure_airport]), 
+      class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
   </div>
   
     <!-- Arrival Airport -->
   <div class="mb-4">
     <%= form.label :arrival_airport, "Arrival", class: "block text-sm font-medium text-gray-700"%>
-    <%= select_tag(:arrival_airport, options_for_select(@airports), class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
+    <%= select_tag(:arrival_airport, 
+      options_for_select(@airports,params[:arrival_airport]),
+      class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
   </div>
 
     <!-- Number of Passengers -->
@@ -18,7 +22,7 @@
     <%= form.label :passengers, "Number of Passengers", class: "block text-sm font-medium text-gray-700"%>
     <select id="passengers" name="passengers" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
       <% (1..5).map do |i| %>
-        <option value="<%= i %>"><%= i %></option>
+        <option value="<%= i %>" <%= "selected" if params[:passengers].to_s == i.to_s %>> <%= i %> </option>
       <% end %>
     </select>
   </div>
@@ -26,7 +30,9 @@
     <!-- Date -->
   <div class="mb-4">
     <%= form.label :start, "Date", class: "block text-sm font-medium text-gray-700"%>
-    <%= select_tag(:start, options_for_select(@flight_dates), class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
+    <%= select_tag(:start,
+      options_for_select(@flight_dates,params[:start]), 
+      class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm") %>
   </div>
 
   <!-- Submit Button -->
